@@ -452,6 +452,8 @@ void setup() {
   history_GLOBAL = newHistoryA();
 
   setupLayout();
+
+  Serial.println("Hello Chordite.");
 }
 
 
