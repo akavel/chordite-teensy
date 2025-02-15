@@ -440,7 +440,28 @@ void setupLayout()
 
 }
 
+unsigned int dbg_old_state = -1;
+
+void dump_state() {
+  integer i, j;
+  unsigned int s = 0;
+
+  for (i = 0; i < NUM_FINGERS; ++i) {
+    for (j = 0; j < NUM_SWITCHES[i]; ++j) {
+      // shift by 1, put new bit at end
+      s = s*2 + readPinIO(SWITCHES[i][j]);
+    }
+  }
+
+  if (s != dbg_old_state) {
+    dbg_old_state = s;
+    Serial.println(dbg_old_state, HEX);
+  }
+}
+
 void setup() {
+  unsigned int s;
+
   Serial.begin(9600);
   delay(1000);
 
@@ -454,10 +475,14 @@ void setup() {
   setupLayout();
 
   Serial.println("Hello Chordite.");
+  Serial.println(dbg_old_state, HEX);
+  dump_state();
 }
 
 
 void loop() {
+  dump_state();
+
   // get function input
   Snapshot current = readInputsAIO(); // +1 Snapshot - deleted in restartHistoryD
   SwitchHistory *h = history_GLOBAL;
