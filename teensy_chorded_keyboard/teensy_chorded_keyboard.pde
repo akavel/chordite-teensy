@@ -1,8 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <Bounce2.h>
 #include "chorded_kbd_lib.h"
 #include "chorded_kbd_lib.c"
+
+Bounce buttons[MAX_FINGER_PIN+1];
 
 void handleOutOfMemory()
 {
@@ -32,11 +35,8 @@ void sendKeyIO(const Key *k)
 
 integer readPinIO(integer pin)
 {
-  pinMode(pin, OUTPUT);
-  digitalWrite(pin, HIGH);
-  pinMode(pin, INPUT);
-
-  return digitalRead(pin) == DOWN;
+  buttons[pin].update();
+  return buttons[pin].read() == DOWN;
 }
 
 Key *charToKeyA(const char c)
@@ -443,6 +443,7 @@ void setupLayout()
 
 unsigned int dbg_old_state = -1;
 
+/*
 void dump_state() {
   integer i, j;
   unsigned int s = 0;
@@ -461,6 +462,7 @@ void dump_state() {
     Serial.println(dbg_old_state, HEX);
   }
 }
+*/
 
 void setup() {
   unsigned int s;
@@ -468,8 +470,16 @@ void setup() {
   Serial.begin(9600);
   delay(1000);
 
-  for (integer i = 0; i < 13; i++) {
-    pinMode(i, INPUT);
+  for (integer i = 0; i < NUM_FINGERS; ++i) {
+    for (integer j = 0; j < NUM_SWITCHES[i]; ++j) {
+      integer pin = SWITCHES[i][j];
+      pinMode(pin, OUTPUT);
+      digitalWrite(pin, UP);
+      pinMode(pin, INPUT);
+      buttons[pin] = Bounce();
+      buttons[pin].attach(pin);
+      buttons[pin].interval(5);
+    }
   }
 
   // this allocation is never freed
@@ -479,12 +489,12 @@ void setup() {
 
   Serial.println("Hello Chordite.");
   Serial.println(dbg_old_state, HEX);
-  dump_state();
+  // dump_state();
 }
 
 
 void loop() {
-  dump_state();
+  // dump_state();
 
   // get function input
   Snapshot current = readInputsAIO(); // +1 Snapshot - deleted in restartHistoryD

@@ -26,6 +26,7 @@
 #define MIDDLE_H 5
 #define INDEX_L 6
 #define INDEX_H 7
+#define MAX_FINGER_PIN INDEX_H
 
 #define LEFT_HANDED TRUE
 
