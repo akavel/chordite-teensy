@@ -36,7 +36,7 @@ integer readPinIO(integer pin)
   digitalWrite(pin, HIGH);
   pinMode(pin, INPUT);
 
-  return digitalRead(pin);
+  return digitalRead(pin) == DOWN;
 }
 
 Key *charToKeyA(const char c)

@@ -29,8 +29,8 @@
 
 #define LEFT_HANDED TRUE
 
-#define UP LOW
-#define DOWN HIGH
+#define UP HIGH
+#define DOWN LOW
 
 /** END **/
 
