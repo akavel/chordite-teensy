@@ -35,6 +35,9 @@ void sendKeyIO(const Key *k)
 
 integer readPinIO(integer pin)
 {
+  pinMode(pin, OUTPUT);
+  digitalWrite(pin, UP);
+  pinMode(pin, INPUT);
   buttons[pin].update();
   return buttons[pin].read() == DOWN;
 }
@@ -473,9 +476,6 @@ void setup() {
   for (integer i = 0; i < NUM_FINGERS; ++i) {
     for (integer j = 0; j < NUM_SWITCHES[i]; ++j) {
       integer pin = SWITCHES[i][j];
-      pinMode(pin, OUTPUT);
-      digitalWrite(pin, UP);
-      pinMode(pin, INPUT);
       buttons[pin] = Bounce();
       buttons[pin].attach(pin);
       buttons[pin].interval(5);
