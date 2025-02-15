@@ -363,7 +363,8 @@ Key *outputKeyA(const Key *k, const integer modifier)
     }
   }
 
-  return newKeyA(colemak(outkey), outmod);
+  // return newKeyA(colemak(outkey), outmod);
+  return newKeyA(outkey, outmod);
 }
 
 
