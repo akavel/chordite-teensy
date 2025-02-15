@@ -455,6 +455,8 @@ void dump_state() {
 
   if (s != dbg_old_state) {
     dbg_old_state = s;
+    Serial.print(dbg_old_state, BIN);
+    Serial.print(" ");
     Serial.println(dbg_old_state, HEX);
   }
 }
