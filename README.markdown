@@ -11,6 +11,8 @@ keyboard, though it is not necessarily specifc to it.
 * Install the [Teensyduino](http://www.pjrc.com/teensy/td_download.html) add-on.
 * Open the included sketch:
   arduino teensy\_chorded\_keyboard/teensy\_chorded\_keyboard.pde
+* Go to menu "Tools" -> "USB Type: ..." and select one of the options with "Keyboard" -
+  for example, "Serial + Keyboard + Mouse + Joystick".
 * Then just compile and upload the program to your Teensy board.
 
 ## Configuration
