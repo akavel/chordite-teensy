@@ -476,12 +476,12 @@ void setup() {
   for (integer i = 0; i < NUM_FINGERS; ++i) {
     for (integer j = 0; j < NUM_SWITCHES[i]; ++j) {
       integer pin = SWITCHES[i][j];
-      buttons[pin] = Bounce();
-      buttons[pin].attach(pin);
-      buttons[pin].interval(5);
       pinMode(pin, OUTPUT);
       digitalWrite(pin, UP);
       pinMode(pin, INPUT);
+      buttons[pin] = Bounce();
+      buttons[pin].attach(pin);
+      buttons[pin].interval(5);
     }
   }
 
